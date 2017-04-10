@@ -1,6 +1,6 @@
 defmodule PokerValidator do
   @moduledoc """
-  Documentation for PokerValidator.
+  This is the main module for validating the hands.
   """
   alias PokerValidator.Combination
   alias PokerValidator.Hand
@@ -8,23 +8,8 @@ defmodule PokerValidator do
 
   @doc """
   With a given list of cards (Greater or equal than 5), this function evaluates
-  the best possible hand, it returns a Hand Struct that contains:
-    * `value` - atom with the name of the hand. the available values are:
-    ...-`:royal_straight_flush`
-    ...-`:straight_flush`
-    ...-`:poker`
-    ...-`:full_house`
-    ...-`:flush`
-    ...-`:straight`
-    ...-`:set`
-    ...-`:two_pairs`
-    ...-`:pair`
-    ...-`:high_card`
-    * `score` - integer with the given score, this score can be used for compare
-      hands
-    * `cards` - chosen cards for the hand
-    * `highs` - contains the values used for qualifying the hand
-    * `suit` - only used for flush hands
+  the best possible hand, it returns a Hand:
+
   """
   def hand(cards) when is_list(cards) and length(cards) >= 5 do
     combinations = Combination.combinations(cards, 5)
