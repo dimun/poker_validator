@@ -2,22 +2,22 @@ defmodule PokerValidator.Hand do
   defstruct value: nil, score: 0, cards: [], highs: [], suit: nil
   @moduledoc """
   Hand is used for saving a qualification, a hand contains:
-    * `value` - atom with the name of the hand. the available values are:
-    ...-`:royal_straight_flush`
-    ...-`:straight_flush`
-    ...-`:poker`
-    ...-`:full_house`
-    ...-`:flush`
-    ...-`:straight`
-    ...-`:set`
-    ...-`:two_pairs`
-    ...-`:pair`
-    ...-`:high_card`
-    * `score` - integer with the given score, this score can be used for compare
-      hands
-    * `cards` - chosen cards for the hand
-    * `highs` - contains the values used for qualifying the hand
-    * `suit` - only used for flush hands
+  * `value` - atom with the name of the hand. the available values are:
+  ...-`:royal_straight_flush`
+  ...-`:straight_flush`
+  ...-`:poker`
+  ...-`:full_house`
+  ...-`:flush`
+  ...-`:straight`
+  ...-`:set`
+  ...-`:two_pairs`
+  ...-`:pair`
+  ...-`:high_card`
+  * `score` - integer with the given score, this score can be used for compare
+  hands
+  * `cards` - chosen cards for the hand
+  * `highs` - contains the values used for qualifying the hand
+  * `suit` - only used for flush hands
   """
   @default_high 10000
 

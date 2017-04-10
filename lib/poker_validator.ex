@@ -9,7 +9,6 @@ defmodule PokerValidator do
   @doc """
   With a given list of cards (Greater or equal than 5), this function evaluates
   the best possible hand, it returns a Hand:
-
   """
   def hand(cards) when is_list(cards) and length(cards) >= 5 do
     combinations = Combination.combinations(cards, 5)
@@ -43,9 +42,139 @@ defmodule PokerValidator do
     end
   end
 
+  # Poker
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _}] = cards) do
+    Hand.new_hand(:poker, cards, %{highs: [value1, value2]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _}] = cards) do
+    Hand.new_hand(:poker, cards, %{highs: [value2, value1]})
+  end
+
+  # Full house
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _}] = cards) do
+    Hand.new_hand(:full_house, cards, %{highs: [value1, value2]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _}] = cards) do
+    Hand.new_hand(:full_house, cards, %{highs: [value2, value1]})
+  end
+
+  # set
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _}] = cards) do
+    Hand.new_hand(:set, cards, %{highs: [value1, value3, value2]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _}] = cards) do
+    Hand.new_hand(:set, cards, %{highs: [value2, value3, value1]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value3, suit: _}] = cards) do
+    Hand.new_hand(:set, cards, %{highs: [value3, value2, value1]})
+  end
+
+  # two pairs
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _}] = cards) do
+    Hand.new_hand(:two_pairs, cards, %{highs: [value2, value1, value3]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value3, suit: _}] = cards) do
+    Hand.new_hand(:two_pairs, cards, %{highs: [value3, value2, value1]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value3, suit: _}] = cards) do
+    Hand.new_hand(:two_pairs, cards, %{highs: [value3, value1, value2]})
+  end
+
+  # pair
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value4, suit: _}] = cards) do
+    Hand.new_hand(:pair, cards, %{highs: [value1, value4, value3, value2]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value4, suit: _}] = cards) do
+    Hand.new_hand(:pair, cards, %{highs: [value2, value4, value3, value1]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value4, suit: _}] = cards) do
+    Hand.new_hand(:pair, cards, %{highs: [value3, value4, value2, value1]})
+  end
+  defp get_hand([
+    %Card{value: value1, suit: _},
+    %Card{value: value2, suit: _},
+    %Card{value: value3, suit: _},
+    %Card{value: value4, suit: _},
+    %Card{value: value4, suit: _}] = cards) do
+    Hand.new_hand(:pair, cards, %{highs: [value4, value3, value2, value1]})
+  end
+
+  # Stright or high card
   defp get_hand(cards) do
-    hihgs = cards |> Enum.map(&(&1.value)) |> Enum.reverse
-    Hand.new_hand(:high_card, cards, %{highs: hihgs})
+    values = cards |> Enum.map(&(&1.value))
+    case {is_straight?(values), values} do
+      {true, [2, _, _, _, 14]} ->
+        Hand.new_hand(:straight, cards, %{highs: [5]})
+      {true, [_, _, _, _, value5]} ->
+        Hand.new_hand(:straight, cards, %{highs: [value5]})
+      _ ->
+        Hand.new_hand(:high_card, cards, %{highs: values |> Enum.reverse})
+    end
   end
 
   # Verifies if a list of 5 cards is a straight
@@ -53,7 +182,7 @@ defmodule PokerValidator do
   defp is_straight?(values) do
     [h | t] = values
     {is_straight?, _} = Enum.reduce_while(t, {true, h},
-      fn(value, {straight?, prev_value}) ->
+      fn(value, {_straight?, prev_value}) ->
         if value == prev_value + 1,
           do: {:cont, {true, value}},
         else: {:halt, {false, value}}
