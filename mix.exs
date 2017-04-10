@@ -30,4 +30,18 @@ defmodule PokerValidator.Mixfile do
   defp deps do
     []
   end
+
+  defp description do
+    """
+    Elixir validator for Texas Holdem hands, with a given list of cards it
+    returns the best possible hand with its score
+    """
+  end
+
+  defp package do
+    [name: :poker_validator,
+     maintainers: ["dgmzcrrls@gmail.com"],
+     licenses: ["MIT"],
+     links: %{"GitHub" => "https://github.com/dimun/poker_validator"}]
+  end
 end
