@@ -1,4 +1,4 @@
-# PokerValidator (Work in progess)
+# PokerValidator
 
 Elixir validator for Texas Holdem hands, with a given list of cards it returns the best possible hand with a given score
 
