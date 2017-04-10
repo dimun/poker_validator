@@ -2,6 +2,20 @@
 
 Elixir validator for Texas Holdem hands, with a given list of cards it returns the best possible hand with its score
 
+## Instalation
+
+  Add this line in deps to your file mix.Examples
+
+  ```Elixir
+  defp deps do
+    [
+      ...,
+      {:poker_validator, "~> 0.1.0"}
+    ]
+  end
+  ```
+
+  $ mix deps.get
 ## Getting started
 
     $ git clone https://github.com/dimun/poker_validator.git
