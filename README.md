@@ -4,7 +4,7 @@ Elixir validator for Texas Holdem hands, with a given list of cards it returns t
 
 ## Instalation
 
-  Add this line in deps to your file mix.Examples
+  Add this line in deps to your file mix.exs
 
   ```Elixir
   defp deps do
