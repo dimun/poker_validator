@@ -32,7 +32,7 @@ Elixir validator for Texas Holdem hands, with a given list of cards it returns t
   ```Elixir
     iex>alias PokerValidator.Card
     iex> cards = [
-      %Card{suit: 1 value: 10},
+      %Card{suit: 1, value: 10},
       %Card{suit: 1, value: 11},
       %Card{suit: 1, value: 12},
       %Card{suit: 1, value: 13},
